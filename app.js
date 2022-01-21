@@ -22,13 +22,57 @@ app.get('/board', function (req, res, next) { res.render('board.html'); });
 
 app.use('/api', require('./routes/api'));
 
+// database setting
+var sqlite3 = require('sqlite3').verbose();
+var db = new sqlite3.Database('./database.db');
+
+db.run(
+  `CREATE TABLE IF NOT EXISTS board ( 
+    \`index\` INTEGER PRIMARY KEY AUTOINCREMENT, 
+    \`subject\` TEXT,
+    \`context\` TEXT, 
+    \`name\` TEXT, 
+    \`password\` TEXT,
+    \`reg_ts\` TEXT,
+    \`edit_ts\` TEXT 
+  )`
+);
+
+db.run(
+  `CREATE TABLE IF NOT EXISTS reply (
+    \`index\` INTEGER PRIMARY KEY AUTOINCREMENT,
+    \`board_idx\` INTEGER,
+    \`context\` TEXT, 
+    \`name\` TEXT,
+    \`reg_ts\` TEXT,
+    FOREIGN KEY(\`board_idx\`) REFERENCES \`board\`(\`index\`)
+  )`
+);
+
+db.run(
+  `CREATE TABLE IF NOT EXISTS rereply ( 
+    \`reply_idx\` INTEGER,
+    \`context\` TEXT, 
+    \`name\` TEXT,
+    \`reg_ts\` TEXT,
+    FOREIGN KEY(\`reply_idx\`) REFERENCES \`reply\`(\`index\`)
+  )`
+);
+
+db.run(
+  `CREATE TABLE IF NOT EXISTS keyword ( 
+    \`name\` TEXT,
+    \`reg_word\` TEXT
+  )`
+);
+
 // catch 404 and forward to error handler
-app.use(function(req, res, next) {
+app.use(function (req, res, next) {
   next(createError(404));
 });
 
 // error handler
-app.use(function(err, req, res, next) {
+app.use(function (err, req, res, next) {
   // set locals, only providing error in development
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};

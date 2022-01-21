@@ -1,0 +1,16 @@
+body {
+  padding: 50px 200px;
+  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+}
+
+#data-container{
+  height: 400px;
+}
+
+form {
+  margin-top: 20px;
+}
+
+#pagination {
+  float: right;
+}
