@@ -35,6 +35,15 @@
 - reg_word : 등록한 키워드
 
 ## 3. API
+- [post]    /board/list     : 게시글 리스트를 획득
+- [post]    /board/search   : 제목, 작성자로 조회한 게시글 리스트 획득
+- [post]    /board/read     : 게시글(제목, 작성자, 내용 등) 정보 획득
+- [PUT]     /board/write    : 게시글 작성
+- [PUT]     /board/update   : 게시글 수정
+- [DELETE]  /board/delete   : 게시글 삭제
+- [post]    /replay/list    : 댓글 리스트 획득
+- [PUT]     /replay/write   : 게시글 작성
+- [post]    /rereplay/write : 대댓글 리스트 획득
 
 ## 4. Front-end 및 기능구현
 ### 게시판 기능
@@ -43,11 +52,11 @@
 
 #### 게시글
 게시글의 유형은 조회(read), 작성(write), 수정(edit)으로 총 3개다. 각각의 유형은 아래와 같은 특성으로 구성할 예정이다.
-| |제목|내용|작성자|비밀번호|작성일|수정일|댓글|
+| |제목|내용|작성자|비밀번호|작성일/수정일|댓글|
 |---|---|---|---|---|---|---|---|
-|조회 |read|read|read|hidden|read|read |read|
-|작성 |write|write|write|write|hidden|hidden|hidden|
-|수정 |write|write|read|hidden| hidden|hidden|hidden|
+|조회 |read|read|read|hidden|read|read|
+|작성 |write|write|write|write|hidden|hidden|
+|수정 |write|write|read|hidden|hidden|hidden|
 
 ### 키워드 알람 기능
 

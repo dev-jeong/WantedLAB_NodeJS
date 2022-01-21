@@ -1,0 +1,25 @@
+body {
+  padding: 50px 200px;
+  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+}
+
+.form-group {
+  margin-top: 10px;
+}
+
+#reg_ts {
+  float: right;
+}
+
+button {
+  float: right;
+  margin-left: 10px;
+}
+
+.list-group{
+  margin-top: 75px;
+}
+
+.list-group > button{
+  margin: 0px;
+}
