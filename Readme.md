@@ -44,7 +44,7 @@
 #### 게시글
 게시글의 유형은 조회(read), 작성(write), 수정(edit)으로 총 3개다. 각각의 유형은 아래와 같은 특성으로 구성할 예정이다.
 | |제목|내용|작성자|비밀번호|작성일|수정일|댓글|
-|---|---|---|
+|---|---|---|---|---|---|---|---|
 |조회 |read|read|read|hidden|read|read |read|
 |작성 |write|write|write|write|hidden|hidden|hidden|
 |수정 |write|write|read|hidden| hidden|hidden|hidden|
