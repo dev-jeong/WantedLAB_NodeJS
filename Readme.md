@@ -41,9 +41,9 @@
 - [PUT]     /board/write    : 게시글 작성
 - [PUT]     /board/update   : 게시글 수정
 - [DELETE]  /board/delete   : 게시글 삭제
-- [post]    /replay/list    : 댓글 리스트 획득
+- [post]    /replay/list    : 댓글, 대댓글 리스트 획득
 - [PUT]     /replay/write   : 게시글 작성
-- [post]    /rereplay/write : 대댓글 리스트 획득
+- [PUT]     /rereplay/write : 대댓글 작성
 
 ## 4. Front-end 및 기능구현
 ### 게시판 기능
