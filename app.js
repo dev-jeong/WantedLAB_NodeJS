@@ -28,7 +28,7 @@ var db = new sqlite3.Database('./database.db');
 
 db.run(
   `CREATE TABLE IF NOT EXISTS board ( 
-    \`index\` INTEGER PRIMARY KEY AUTOINCREMENT, 
+    \`idx\` INTEGER PRIMARY KEY AUTOINCREMENT, 
     \`subject\` TEXT,
     \`context\` TEXT, 
     \`name\` TEXT, 
@@ -40,12 +40,11 @@ db.run(
 
 db.run(
   `CREATE TABLE IF NOT EXISTS reply (
-    \`index\` INTEGER PRIMARY KEY AUTOINCREMENT,
+    \`idx\` INTEGER PRIMARY KEY AUTOINCREMENT,
     \`board_idx\` INTEGER,
     \`context\` TEXT, 
     \`name\` TEXT,
-    \`reg_ts\` TEXT,
-    FOREIGN KEY(\`board_idx\`) REFERENCES \`board\`(\`index\`)
+    \`reg_ts\` TEXT
   )`
 );
 
@@ -54,8 +53,7 @@ db.run(
     \`reply_idx\` INTEGER,
     \`context\` TEXT, 
     \`name\` TEXT,
-    \`reg_ts\` TEXT,
-    FOREIGN KEY(\`reply_idx\`) REFERENCES \`reply\`(\`index\`)
+    \`reg_ts\` TEXT
   )`
 );
 

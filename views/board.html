@@ -13,36 +13,41 @@
 </head>
 
 <body>
-    <form>
-        <div class="form-group">
-            <label for="exampleFormControlInput1">제목</label>
-            <input type="text" class="form-control" id="exampleFormControlInput1">
+    <div class="form-group" id>
+        <label>제목</label>
+        <input type="text" class="form-control" id="subject">
+    </div>
+    <div class="form-row" id="user_info">
+        <div class="col">
+            <label>이름</label>
+            <input type="text" class="form-control" id="name">
         </div>
-        <div class="form-row">
-            <div class="col">
-                <label for="exampleFormControlInput1">이름</label>
-                <input type="text" class="form-control">
-            </div>
-            <div class="col">
-                <label for="exampleFormControlInput1">패스워드</label>
-                <input type="password" class="form-control">
-            </div>
+        <div class="col">
+            <label>패스워드(한글사용불가)</label>
+            <input type="password" class="form-control" id="password">
         </div>
-        <div class="form-group">
-            <label id="reg_ts">작성일 : </label>
+    </div>
+    <div class="form-group">
+        <label>내용</label>
+        <label id="write_info">작성자 : | 작성일 : </label>
+        <textarea class="form-control" rows="10" id="context"></textarea>
+    </div>
+    <div class="btn_group">
+        <button type="button" class="btn btn-outline-secondary btn-sm" id="btn_enroll" onclick="enroll()">등록</button>
+        <button type="button" class="btn btn-outline-secondary btn-sm" id="btn_del" onclick="del()">삭제</button>
+        <button type="button" class="btn btn-outline-secondary btn-sm" id="btn_edit" onclick="edit()">수정</button>
+        <button type="button" class="btn btn-outline-secondary btn-sm" id="btn_update" onclick="update()">수정완료</button>
+        <button type="button" class="btn btn-outline-secondary btn-sm" id="btn_cancel" onclick="cancel()">취소</button>
+        <button type="button" class="btn btn-outline-secondary btn-sm" id="btn_cancel" onclick="back()">목록</button>
+    </div>
+    <div class="input-group mb-3"id="write_reply">
+        <input type="text" class="form-control col-2" id="reply_name" placeholder="이름">
+        <input type="text" class="form-control col-10" id="reply_context" placeholder="댓글">
+        <div class="input-group-append">
+            <button class="btn btn-outline-secondary" type="button" onclick="enroll_reply()">등록</button>
         </div>
-        <div class="form-group">
-            <label for="exampleFormControlTextarea1">내용</label>
-            <textarea class="form-control" id="exampleFormControlTextarea1" rows="10"></textarea>
-        </div>
-        <button type="button" class="btn btn-outline-secondary btn-sm">취소</button>
-        <button type="button" class="btn btn-outline-secondary btn-sm">수정</button>
-        <button type="button" class="btn btn-outline-secondary btn-sm">등록</button>
-    </form>
-    <div class="list-group" id="data-container">
-        <button type="button" class="list-group-item list-group-item-action">댓글1</button>
-        <button type="button" class="list-group-item list-group-item-action">ㄴ 대댓글1</button>
-        <button type="button" class="list-group-item list-group-item-action">댓글2</button>
+    </div>
+    <div class="list-group" id="reply">
     </div>
 </body>
 

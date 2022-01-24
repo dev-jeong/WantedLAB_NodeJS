@@ -1,5 +1,5 @@
 body {
-  padding: 50px 200px;
+  padding: 50px 400px;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
 }
 
@@ -7,10 +7,33 @@ body {
   height: 400px;
 }
 
-form {
+.form-row {
   margin-top: 20px;
 }
 
 #pagination {
   float: right;
+}
+
+span{
+  display: inline-block;
+}
+
+.subject{
+  width: 60%;
+}
+
+.name{
+  width: 10%;
+}
+
+.reg_ts{
+  width: 30%;
+  text-align: right;
+}
+
+.no-data{
+  cursor: auto;
+  width: 100%;
+  text-align: center;
 }

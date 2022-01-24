@@ -1,25 +1,42 @@
 body {
-  padding: 50px 200px;
+  padding: 50px 400px;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
 }
 
-.form-group {
+.form-row{
+  margin-bottom: 1rem;
+}
+
+#write_info{
+  float: right;
+}
+
+.btn_group{
+  float: right;
+  margin-bottom: 20px;
+}
+
+.form-control[readonly] {
+    background-color: #fff;
+}
+
+.form-control:focus {
+  border: 1px solid #ced4da;
+  box-shadow: none;
+}
+
+.list-group {
   margin-top: 10px;
 }
 
-#reg_ts {
-  float: right;
+span{
+  display: inline-block;
 }
 
-button {
-  float: right;
-  margin-left: 10px;
+.reply_name{
+  width: 10%;
 }
 
-.list-group{
-  margin-top: 75px;
-}
-
-.list-group > button{
-  margin: 0px;
+.reply_context{
+  width: 80%;
 }

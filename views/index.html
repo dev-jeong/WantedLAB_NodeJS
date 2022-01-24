@@ -17,24 +17,22 @@
 <body>
     <!--게시글 목록-->
     <div class="list-group" id="data-container"></div>
-    <form>
-        <div class="form-row">
-            <div class="col-sm">
-                <div class="input-group input-group-sm mb-3">
-                    <input type="text" class="form-control">
-                    <div class="input-group-append">
-                        <button class="btn btn-outline-secondary" type="button">검색</button>
-                    </div>
+    <div class="form-row">
+        <div class="col-sm">
+            <div class="input-group input-group-sm mb-3">
+                <input type="text" class="form-control" id="word">
+                <div class="input-group-append">
+                    <button class="btn btn-outline-secondary" type="button" onclick="search();">검색</button>
                 </div>
             </div>
-            <div class="col-sm">
-                <button type="button" class="btn btn-outline-secondary btn-sm">글쓰기</button>
-            </div>
-            <div class="col-sm">
-                <div id="pagination"></div>
-            </div>
         </div>
-    </form>
+        <div class="col-sm">
+            <button type="button" class="btn btn-outline-secondary btn-sm" onclick="board(2, null)">글쓰기</button>
+        </div>
+        <div class="col-sm">
+            <div id="pagination"></div>
+        </div>
+    </div>
 </body>
 
 </html>
