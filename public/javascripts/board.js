@@ -22,29 +22,66 @@ $(document).ready(function () {
             url: "/api/board/read",
             method: "POST",
             data: { idx: idx },
-            dataType: "text",
             success: function (result) {
-                $('#subject').val(JSON.parse(result).subject)
-                $('#context').val(JSON.parse(result).context)
-                if (JSON.parse(result).edit_ts != null)
-                    $('#write_info').text('작성자 : ' + JSON.parse(result).name + ' | 최종수정일 : ' + JSON.parse(result).edit_ts)
-                else
-                    $('#write_info').text('작성자 : ' + JSON.parse(result).name + ' | 작성일 : ' + JSON.parse(result).reg_ts)
-
+                if (result.result) {
+                    $('#subject').val(result.data.subject)
+                    $('#context').val(result.data.context)
+                    if (result.data.edit_ts != null)
+                        $('#write_info').text('작성자 : ' + result.data.name + ' | 최종수정일 : ' + result.data.edit_ts)
+                    else
+                        $('#write_info').text('작성자 : ' + result.data.name + ' | 작성일 : ' + result.data.reg_ts)
+                }
+                else {
+                    location.href = '/'
+                    alert('잘못된 접근입니다')
+                }
             }
         })
 
         $.ajax({
             url: "/api/reply/list",
             method: "POST",
-            data: { board_idx: idx },
-            dataType: "text",
+            data: { board_idx: idx, page : 1},
             success: function (result) {
-                JSON.parse(result).forEach(function (reply) {
-                    $('#reply').append('<button type="button" class="list-group-item list-group-item-action">' +
-                                       '     <span class="reply_name">'+reply.name+'</span>' +
-                                       '     <span class="reply_context">'+reply.context+'</span>' +
-                                       '</button>')
+                result.list.forEach(function (reply) {
+                    $('#reply').append(
+                        '<button type="button" class="list-group-item list-group-item-action" onclick="toggle_rereply(' + reply.idx + ')">' +
+                        '     <span class="reply_name">' + reply.name + '</span>' +
+                        '     <span class="reply_context">' + reply.context + '</span>' +
+                        '     <span class="reply_regts">' + reply.reg_ts + '</span>' +
+                        '</button>'
+                    )
+
+                    $('#reply').append('<div class="list-group rereply" id="rereply' + reply.idx + '"></div>')
+
+                    $('#reply').append(
+                        '<div class="input-group write_rereply" id="write_rereply' + reply.idx + '">' +
+                        '    <input type="text" class="form-control col-2" id="rereply_name' + reply.idx + '" placeholder="이름">' +
+                        '    <input type="text" class="form-control col-10" id="rereply_context' + reply.idx + '" placeholder="댓글">' +
+                        '    <div class="input-group-append">' +
+                        '        <button class="btn btn-outline-secondary" type="button" onclick="enroll_rereply(' + reply.idx + ')">등록</button>' +
+                        '    </div>' +
+                        '</div>'
+                    )
+
+                    $.ajax({
+                        url: "/api/rereply/list",
+                        method: "POST",
+                        data: { reply_idx: reply.idx },
+                        dataType: "text",
+                        success: function (result) {
+                            JSON.parse(result).forEach(function (rereply) {
+                                $('#rereply' + reply.idx).append(
+                                    '<button type="button" class="list-group-item list-group-item-action">' +
+                                    '     <span class="rereply_mark">ㄴ</span>' +
+                                    '     <span class="rereply_name">' + rereply.name + '</span>' +
+                                    '     <span class="rereply_context">' + rereply.context + '</span>' +
+                                    '     <span class="reply_regts">' + reply.reg_ts + '</span>' +
+                                    '</button>'
+                                )
+                            })
+                        }
+                    })
                 })
             }
         })
@@ -76,17 +113,41 @@ $(document).ready(function () {
             url: "/api/board/read",
             method: "POST",
             data: { idx: idx },
-            dataType: "text",
             success: function (result) {
-                $('#subject').val(JSON.parse(result).subject)
-                $('#context').val(JSON.parse(result).context)
+                if (result.result) {
+                    var password = prompt("비밀번호를 입력해주세요");
+
+                    if (password != null) {
+                        $.ajax({
+                            url: "/api/board/auth",
+                            method: "POST",
+                            data: { password: password, idx: idx },
+                            success: function (check) {
+                                if (check) {
+                                    $('#subject').val(result.data.subject)
+                                    $('#context').val(result.data.context)
+                                }
+                                else {
+                                    alert('비밀번호를 확인하세요')
+                                    location.href = window.location.href.replace('type=3', 'type=1')
+                                }
+                            }
+                        })
+                    }
+                    else {
+                        location.href = window.location.href.replace('type=3', 'type=1')
+                    }
+                }
+                else {
+                    alert('잘못된 접근입니다')
+                    location.href = '/'
+                }
             }
         })
     }
 });
 
 function enroll() {
-    var korean = /[ㄱ-ㅎ|ㅏ-ㅣ|가-힣]/;
     var parameter = {
         subject: $('#subject').val(),
         name: $('#name').val(),
@@ -94,8 +155,20 @@ function enroll() {
         context: $('#context').val()
     }
 
-    if (korean.test(parameter.password)) {
-        alert('한글은 사용할 수 없습니다')
+    if (parameter.subject == '') {
+        alert('제목을 입력해주세요')
+        return 0
+    }
+    else if (parameter.name == '') {
+        alert('이름을 입력해주세요')
+        return 0
+    }
+    else if (parameter.password == '') {
+        alert('비밀번호를 입력해주세요')
+        return 0
+    }
+    else if (parameter.context == '') {
+        alert('내용을 입력해주세요')
         return 0
     }
     else {
@@ -105,7 +178,10 @@ function enroll() {
             data: parameter,
             dataType: "text",
             success: function (result) {
-                alert('등록이 완료되었습니다.')
+                if (result)
+                    alert('등록이 완료되었습니다.')
+                else
+                    alert('잠시 후 다시 시도해주세요')
                 location.href = "/"
             }
         })
@@ -122,20 +198,27 @@ function del() {
             data: { password: password, idx: idx },
             dataType: "text",
             success: function (result) {
-                if (result == 'fail') {
-                    alert('비밀번호를 확인하세요')
-                }
-                else if (result == 'success') {
+                if (result) {
                     $.ajax({
                         url: "/api/board/delete",
                         method: "DELETE",
                         data: { idx: idx },
                         dataType: "text",
                         success: function (result) {
-                            alert('삭제되었습니다')
-                            location.href = "/"
+                            if (result) {
+                                alert('삭제되었습니다')
+                                location.href = "/"
+                            }
+                            else {
+                                alert('잠시 후 다시 시도해주세요')
+                                location.reload()
+                            }
                         }
                     })
+
+                }
+                else {
+                    alert('비밀번호를 확인하세요')
                 }
             }
         })
@@ -143,24 +226,7 @@ function del() {
 }
 
 function edit() {
-    var password = prompt("비밀번호를 입력해주세요");
-
-    if (password != null) {
-        $.ajax({
-            url: "/api/board/auth",
-            method: "POST",
-            data: { password: password, idx: idx },
-            dataType: "text",
-            success: function (result) {
-                if (result == 'fail') {
-                    alert('비밀번호를 확인하세요')
-                }
-                else if (result == 'success') {
-                    location.href = window.location.href.replace('type=1', 'type=3')
-                }
-            }
-        })
-    }
+    location.href = window.location.href.replace('type=1', 'type=3')
 }
 
 function update() {
@@ -199,6 +265,30 @@ function enroll_reply() {
 
     $.ajax({
         url: "/api/reply/write",
+        method: "PUT",
+        data: parameter,
+        dataType: "text",
+        success: function (result) {
+            alert('등록이 완료되었습니다.')
+            location.reload()
+        }
+    })
+}
+
+function toggle_rereply(reply_idx) {
+    $(".write_rereply").css('display', 'none')
+    $("#write_rereply" + reply_idx).css('display', 'flex')
+}
+
+function enroll_rereply(reply_idx) {
+    var parameter = {
+        reply_idx: reply_idx,
+        name: $('#rereply_name' + reply_idx).val(),
+        context: $('#rereply_context' + reply_idx).val()
+    }
+
+    $.ajax({
+        url: "/api/rereply/write",
         method: "PUT",
         data: parameter,
         dataType: "text",

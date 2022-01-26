@@ -3,16 +3,17 @@ body {
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
 }
 
-#data-container{
-  height: 400px;
+.list-group{
+  height: 450px;
 }
 
 .form-row {
   margin-top: 20px;
 }
 
-#pagination {
+.btn-page {
   float: right;
+  margin-left: 10px;
 }
 
 span{

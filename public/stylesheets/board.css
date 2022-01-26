@@ -38,5 +38,34 @@ span{
 }
 
 .reply_context{
-  width: 80%;
+  width: 70%;
+}
+
+.reply_regts{
+  width: 15%;
+  text-align: right;
+}
+
+.write_rereply{
+  display: none;
+}
+
+.rereply{
+  margin-top: 0px;
+}
+
+.rereply_mark{
+  width: 3%;
+}
+
+.rereply_name{
+  width: 7%;
+}
+
+.rereply_context{
+  width: 70%;
+}
+
+.rereply_regts{
+  width: 15%;
 }

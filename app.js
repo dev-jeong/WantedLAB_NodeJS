@@ -60,7 +60,15 @@ db.run(
 db.run(
   `CREATE TABLE IF NOT EXISTS keyword ( 
     \`name\` TEXT,
-    \`reg_word\` TEXT
+    \`keyword\` TEXT
+  )`
+);
+
+db.run(
+  `CREATE TABLE IF NOT EXISTS alert ( 
+    \`name\` TEXT,
+    \`keyword\` TEXT,
+    \`subject\` TEXT
   )`
 );
 

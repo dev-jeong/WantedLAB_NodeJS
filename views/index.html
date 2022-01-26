@@ -16,7 +16,7 @@
 
 <body>
     <!--게시글 목록-->
-    <div class="list-group" id="data-container"></div>
+    <div class="list-group" id="list"></div>
     <div class="form-row">
         <div class="col-sm">
             <div class="input-group input-group-sm mb-3">
@@ -30,9 +30,39 @@
             <button type="button" class="btn btn-outline-secondary btn-sm" onclick="board(2, null)">글쓰기</button>
         </div>
         <div class="col-sm">
-            <div id="pagination"></div>
+            <div class="input-group input-group-sm mb-3">
+                <input type="text" class="form-control" id="name">
+                <div class="input-group-append">
+                    <button class="btn btn-outline-secondary" type="button" data-toggle="modal"
+                        data-target="#exampleModal" onclick="check_alert();">알람확인하기</button>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm">
+            <button type="button" class="btn btn-outline-secondary btn-sm btn-page" id="page_up"
+                onclick="page_up()">다음</button>
+            <button type="button" class="btn btn-outline-secondary btn-sm btn-page" id="page_num" disabled></button>
+            <button type="button" class="btn btn-outline-secondary btn-sm btn-page" id="page_down"
+                onclick="page_down()">이전</button>
         </div>
     </div>
 </body>
+
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">알람확인</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+
+            </div>
+        </div>
+    </div>
+</div>
 
 </html>
